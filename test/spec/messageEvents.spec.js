@@ -1,25 +1,21 @@
-'use strict';
+const chai = await import('chai');
+const sinon = (await import('sinon')).default;
+const expect = chai.expect;
 
-var chai = require('chai')
-  , expect = chai.expect
-  , sinon = require('sinon');
-
-require('sinon-as-promised');
-
-chai.use(require('sinon-chai'));
-chai.use(require('chai-as-promised'));
+chai.use((await import('sinon-chai')).default);
+chai.use((await import('chai-as-promised')).default);
 
 describe('Message Events Library', function() {
   let client, messageEvents, callback;
 
-  beforeEach(function() {
+  beforeEach(async function() {
     client = {
       get: sinon.stub().resolves({})
     };
 
     callback = function() {};
 
-    messageEvents = require('../../lib/messageEvents')(client);
+    messageEvents = (await import('../../lib/messageEvents.js')).default(client);
   });
 
   describe('search Method', function() {

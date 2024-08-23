@@ -1,19 +1,20 @@
-'use strict';
+let _ , SparkPost, chai, sinon, expect;
 
-var chai = require('chai')
-  , expect = chai.expect
-  , SparkPost = require('../../lib/sparkpost')
-  , sinon = require('sinon');
+before(async () => {
+    _ = (await import('lodash')).default;
+    SparkPost = (await import('../../lib/sparkpost.js')).SparkPost;
+    chai = (await import('chai'));
+    sinon = (await import('sinon')).default;
+    expect = chai.expect;
 
-require('sinon-as-promised');
-
-chai.use(require('sinon-chai'));
-chai.use(require('chai-as-promised'));
+    chai.use((await import('sinon-chai')).default);
+    chai.use((await import('chai-as-promised')).default);
+});
 
 describe('Inbound Domains Library', function() {
   let client, inboundDomains, callback;
 
-  beforeEach(function() {
+  beforeEach(async function() {
     client = {
       get: sinon.stub().resolves({}),
       post: sinon.stub().resolves({}),
@@ -23,7 +24,7 @@ describe('Inbound Domains Library', function() {
 
     callback = function() {};
 
-    inboundDomains = require('../../lib/inboundDomains')(client);
+    inboundDomains = (await import('../../lib/inboundDomains.js')).default(client);
   });
 
   describe('list Method', function() {

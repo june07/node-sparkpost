@@ -1,19 +1,20 @@
-'use strict';
+let _ , SparkPost, chai, sinon, expect;
 
-var chai = require('chai')
-  , expect = chai.expect
-  , SparkPost = require('../../lib/sparkpost')
-  , sinon = require('sinon');
-
-require('sinon-as-promised');
-
-chai.use(require('sinon-chai'));
-chai.use(require('chai-as-promised'));
+before(async () => {
+    _ = (await import('lodash')).default;
+    SparkPost = (await import('../../lib/sparkpost.js')).SparkPost;
+    chai = (await import('chai'));
+    sinon = (await import('sinon')).default;
+    expect = chai.expect;
+  
+    chai.use((await import('sinon-chai')).default);
+    chai.use((await import('chai-as-promised')).default);
+});
 
 describe('Suppression List Library', function() {
   let client, suppressionList, callback;
 
-  beforeEach(function() {
+  beforeEach(async function() {
     client = {
       get: sinon.stub().resolves({}),
       post: sinon.stub().resolves({}),
@@ -24,7 +25,7 @@ describe('Suppression List Library', function() {
 
     callback = function() {};
 
-    suppressionList = require('../../lib/suppressionList')(client);
+    suppressionList = (await import('../../lib/suppressionList.js')).default(client);
   });
 
   describe('list', function() {

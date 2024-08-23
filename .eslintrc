@@ -2,5 +2,9 @@
   "extends": "sparkpost/api",
   "globals": {
     "Promise": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module"
   }
 }
